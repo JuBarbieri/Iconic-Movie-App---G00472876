@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{ movie?.title }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="goHome()">
+                <ion-icon name="home"></ion-icon>
+            </ion-button>
+            <ion-buttons>
+                <ion-button (click)="goToFavourites()">
+                    <ion-icon name="heart"></ion-icon>
+                </ion-button>
+        </ion-buttons>
+    </ion-toolbar> 
+</ion-header>
+
+
+<ion-content>
+    <p class="overview">{{ movie?.overview }}</p>
+    
+    <!-- button changes depending on whether movie is already a favorite -->
+    <ion-button expand="block" [color]="isFavourite ? 'danger' : 'primary'" (click)="toggleFavourite()" class="fav-btn">
+        {{ isFavourite ? 'REMOVE FROM FAVOURITES' : 'ADD TO FAVOURITES' }}
+    </ion-button>
+
+    <h3 class="section-title" *ngIf="cast.length > 0">Cast</h3>
+
+    <!-- cast list -->
+     <div class="person-row" *ngFor="let member of cast" (click)="openPersonDetails(member)">
+        <img *ngIf="member.profile_path" [src]="getImageUrl(member.profile_path)" class="person-img" />
+        <div *ngIf="!member.profile_path" class="person-img no-img">No image</div>
+        <div class="person-info">
+            <p class="person-name">{{ member.name }}</p>
+            <p class="person-role">{{ member.character }}</p>
+        </div>
+     </div>
+
+     <h3 class="section-title" *ngIf="crew.length > 0">Crew</h3>
+     
+     <!-- crew list -->
+     <div class="person-row" *ngFor="let member of crew" (click)="openPersonDetails(member)">
+        <img *ngIf="member.profile_path" [src]="getImageUrl(member.profile_path)" class="person-img" />
+        <div *ngIf="!member.profile_path" class="person-img no-img">No image</div>
+        <div class="person-info">
+            <p class="person-name">{{ member.name }}</p>
+            <p class="person-role">{{ member.character }}</p>
+        </div>
+     </div>
+
+</ion-content>

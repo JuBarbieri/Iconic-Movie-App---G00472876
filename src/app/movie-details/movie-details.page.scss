@@ -1,0 +1,67 @@
+.overview {
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.fav-btn{
+    margin: 4px 16px 12px;
+}
+
+.section-tittle{
+    padding: 10px 16px 4px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    border-top: 1px solid #eee;
+}
+
+/* each cast/crew member row */
+.person-row{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+}
+
+.person-row:active{
+    background: #f5f5f5;
+
+}
+
+.person-img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* shown when no image is available */
+.no-img {
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #999;
+} 
+
+.person-info {
+    flex: 1;
+}
+
+.person-name {
+    margin: 0 0 2px;   
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.person-role {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+}

@@ -18,7 +18,7 @@ import { DataService } from '../services/data.service';
     imports: [
         CommonModule,
         FormsModule,
-        IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonIcon, IonItem, IonInput, IonLabel 
+        IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonItem, IonInput, IonLabel 
     ],
 })
 export class HomePage implements OnInit {
