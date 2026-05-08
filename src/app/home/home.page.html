@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{ sudentNumber}}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="goToFavourites()">
+                <ion-icon name="heart"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar> 
+</ion-header>
+
+<ion-content>
+
+    <ion-item>
+        <ion-label position="stacked">Search</ion-label>
+        <ion-input placeholder="Movie Name" [(ngModel)]="searchQuery"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" (click)="onSearch()">SEARCH</ion-button>
+
+    <p class="list-title">{{ listTitle }}</p>
+
+    <!-- loop through movies and display each one-->
+     <div class="movie-item" *ngFor="let movie of movies" (click)="openMovie(movie)">
+        <img *ngIf="movie.poster_path" [src]="getImageUrl(movie.poster_path)" class="movie-poster" />
+        <p class="overview">{{ movie.overview }}</p>
+        <hr />
+     </div>
+
+</ion-content>

@@ -1,0 +1,33 @@
+.list-title {
+    font-weight: bold;
+    padding: 10px 16px 4px;
+    margin: 0;
+}
+
+/* each movie card in the list */
+.movie-item {
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.movie-item:active {
+    background: #f0f0f0;
+}
+
+.movie-poster {
+    width: 160px;
+    display: block;
+}
+
+/* overview text under the poster */
+ 
+.overview {
+    font-size: 13px;
+    color: #444;
+    margin-top:  8px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+}
