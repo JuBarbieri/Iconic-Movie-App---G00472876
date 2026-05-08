@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{ details?.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="goHome()">
+                <ion-icon name="home"></ion-icon>
+            </ion-button>
+            <ion-buttons>
+                <ion-button (click)="goToFavourites()">
+                    <ion-icon name="heart"></ion-icon>
+                </ion-button>
+        </ion-buttons>
+    </ion-toolbar> 
+</ion-header>
+
+<ion-content>
+    <div class="profile-wrap">
+        <img *ngIf="details?.profile_path" [src]="getImageUrl(details.profile_path)" class="profile-img" />
+        <p *ngIf="details && !details.profile_path" class="no-img">No image</p>
+    </div>
+
+    <div class="info-block" *ngIf="details">
+
+        <!-- only show if birthday exists -->
+        <p *ngIf="details.birthday" class="dob">
+            {{ details.birthday }}
+            <span *ngIf="details.deathday"> - {{ details.deathday }}</span>
+        </p>
+
+        <p *ngIf="details.place_of_birth" class="place">{{ details.place_of_birth }}</p>
+        
+        <!-- only show if aka list is not empty -->
+        <div *ngIf="details.also_known_as?.length > 0" class="aka">
+            <strong>Also Known As: </strong>
+            <span *ngFor="let name of details.also_known_as; let last=last">{{ name }}</span *ngIf="!last">, </span>
+        </div>
+
+        <p *ngIf="details.biography" class="bio">{{ details.biography }} </p>
+
+    </div>
+    <!-- movies this person has been in -->
+     <div class="movie-row" *ngFor="let movie of movies" (click)="openMovie(movie)">
+        <span class="movie-title">{{ movie.title }}</span>
+        <img *ngIf="movie.poster_path" [src]="getImageUrl(movie.poster_path)" class="movie-thumb" />
+        <div *ngIf="!movie.poster_path" class="movie-thumb no-img">No image</div>
+     </div>
+     
+</ion-content>
