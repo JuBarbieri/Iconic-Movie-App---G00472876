@@ -1,4 +1,4 @@
-improt { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 //service used to pass data between pages
 @Injectable({

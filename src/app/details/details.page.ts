@@ -1,5 +1,5 @@
-import { Componet } from '@angular/core';
-import { CommonModule } from '@angular/commmon';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, ViewWillEnter
