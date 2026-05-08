@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Favourite Movies</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="goHome()">
+                <ion-icon name="home"></ion-icon>
+            </ion-button>
+         </ion-buttons>
+    </ion-toolbar> 
+</ion-header>
+
+<ion-content>
+
+    <!-- shwon when no favourites have been added yet -->
+
+    <p *ngIF="favourites.length == 0" class="empty-msg">No favoruite movies added yet.</p>
+
+    <!-- List of favourites movies -->
+     <div class="fav-card" *ngFor="let movie of favourites">
+        <img *ngIf="movie.poster_path" [src]="getImageUrl(movie.poster_path)" class="fav-poster" />
+        <p class="fav-title">{{ movie.title }}</p>
+        <ion-button size="small" (click)="openMovieDetails(movie)">DETAILS</ion-button>
+     </div>
+     
+</ion-content>
