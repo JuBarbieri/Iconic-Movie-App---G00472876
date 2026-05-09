@@ -13,7 +13,7 @@
 
     <!-- shwon when no favourites have been added yet -->
 
-    <p *ngIF="favourites.length == 0" class="empty-msg">No favoruite movies added yet.</p>
+    <p *ngIf="favourites.length == 0" class="empty-msg">No favoruite movies added yet.</p>
 
     <!-- List of favourites movies -->
      <div class="fav-card" *ngFor="let movie of favourites">

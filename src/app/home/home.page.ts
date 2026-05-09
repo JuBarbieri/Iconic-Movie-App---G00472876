@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonItem, IonInput, IonLabel
 } from '@ionic/angular/standalone';
@@ -9,11 +8,12 @@ import { addIcons } from 'ionicons';
 import { heart } from 'ionicons/icons';
 import { MovieService } from '../services/movie.service';
 import { DataService } from '../services/data.service';
+import { NavController } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
-    styleUrl: ['home.page.scss'],
+    styleUrl: 'home.page.scss',
     standalone: true,
     imports: [
         CommonModule,
@@ -31,46 +31,50 @@ export class HomePage implements OnInit {
     constructor(
         private movieService: MovieService,
         private dataService: DataService,
-        private router: Router
+        private navCtrl: NavController
 
     ){
         addIcons({ heart });
     }
 
-    async ngOnInit() {
-        await this.loadTrending();
+     ngOnInit() {
+       this.loadTrending();
     }
 
     //loads todays trending movies on startup
-    async loadTrending() {
+     loadTrending() {
         this.listTitle = "Today's Trending Movies";
-        const data = await this.movieService.getTrending();
-        this.movies = data.results;
-        console.log(this.movies);
+        this.movieService.getTrending().subscribe((data: any) => {
+            this.movies = data.results;
+            console.log(this.movies);
+        });
+        
     }
 
     //called when search button is pressed 
-    async onSearch() {
+     onSearch() {
         if(this.searchQuery == '') {
-            await this.loadTrending();
+            this.loadTrending();
             return;
         }
         this.listTitle = this.searchQuery + ' Movies';
-        const data = await this.movieService.searchMovies(this.searchQuery);
+       this.movieService.searchMovies(this.searchQuery).subscribe((data: any) => {
         this.movies = data.results;
+       });
     }
 
     //store selected movie and go to details page
     openMovie(movie: any){
         this.dataService.selectedMovie = movie;
-        this.router.navigate(['/movie-details']);
+        this.navCtrl.navigateForward(['/movie-details']);
     } 
 
-    goToFavorites() {
-        this.router.navigate(['/favourites']);
+    goToFavourites() {
+        this.navCtrl.navigateForward(['/favourites']);
     }
     
     getImageUrl(path: string) {
         return this.movieService.getImageUrl(path);
     }
+    
 }

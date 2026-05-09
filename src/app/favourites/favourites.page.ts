@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular/standalone';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, ViewWillEnter
 } from '@ionic/angular/standalone';
@@ -13,7 +13,7 @@ import { DataService } from '../services/data.service';
 @Component({
     selector: 'app-favourites',
     templateUrl: 'favourites.page.html',
-    styleUrl: ['favourites.page.scss'],
+    styleUrl: 'favourites.page.scss',
     standalone: true,
     imports: [
         CommonModule,
@@ -28,28 +28,31 @@ export class FavouritesPage implements ViewWillEnter {
         private favouritesService: FavouritesService,
         private movieService: MovieService,
         private dataService: DataService,
-        private router: Router
+        private navCtrl: NavController
     ){
         addIcons({ home });
     }
 
     //reload favourites every time the page is opened
-    async ionViewWillEnter() {
-        this.favourites = await this.favouritesService.getFavourites();
-        console.log(this.favourites);
+     ionViewWillEnter() {
+        this.favouritesService.getFavourites().then ((data: any) => {
+            this.favourites = data;
+            console.log(this.favourites);
+        });
+        
     }
 
     //store selected movie and go to movie details page
     openMovieDetails(movie: any) {
         this.dataService.selectedMovie = movie;
-        this.router.navigate(['/movie-details']);
+        this.navCtrl.navigateForward(['/movie-details']);
     }
 
     goHome(){
-        this.router.navigate(['/home']);
+        this.navCtrl.navigateForward(['/home']);
     }
 
-    goImageUrl(path: string) {
+    getImageUrl(path: string) {
         return this.movieService.getImageUrl(path);
     }
 }

@@ -5,7 +5,6 @@
             <ion-button (click)="goHome()">
                 <ion-icon name="home"></ion-icon>
             </ion-button>
-            <ion-buttons>
                 <ion-button (click)="goToFavourites()">
                     <ion-icon name="heart"></ion-icon>
                 </ion-button>
@@ -32,7 +31,7 @@
         <!-- only show if aka list is not empty -->
         <div *ngIf="details.also_known_as?.length > 0" class="aka">
             <strong>Also Known As: </strong>
-            <span *ngFor="let name of details.also_known_as; let last=last">{{ name }}</span *ngIf="!last">, </span>
+            <span *ngFor="let name of details.also_known_as; let last=last">{{ name }}<span *ngIf="!last">, </span></span>
         </div>
 
         <p *ngIf="details.biography" class="bio">{{ details.biography }} </p>
