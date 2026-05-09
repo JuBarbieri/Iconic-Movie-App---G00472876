@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, RouteReuseStrategy } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, withPreloading, PreloadAllModules } from '@angular/router';
 import { routes } from './app.routes';
 import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -10,7 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 export const appConfig: ApplicationConfig = {
     providers: [
        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-        provideRouter(routes),
+        provideRouter(routes, withPreloading(PreloadAllModules)),
         provideIonicAngular({}),
         provideHttpClient(),
         //ionic storage used to persist favourites
