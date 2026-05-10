@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, ViewWillEnter
 } from '@ionic/angular/standalone';
@@ -28,7 +28,7 @@ export class FavouritesPage implements ViewWillEnter {
         private favouritesService: FavouritesService,
         private movieService: MovieService,
         private dataService: DataService,
-        private navCtrl: NavController
+        private router: Router
     ){
         addIcons({ home });
     }
@@ -45,11 +45,11 @@ export class FavouritesPage implements ViewWillEnter {
     //store selected movie and go to movie details page
     openMovieDetails(movie: any) {
         this.dataService.selectedMovie = movie;
-        this.navCtrl.navigateForward(['/movie-details']);
+        this.router.navigate(['/movie-details']);
     }
 
     goHome(){
-        this.navCtrl.navigateForward(['/home']);
+        this.router.navigate(['/home']);
     }
 
     getImageUrl(path: string) {

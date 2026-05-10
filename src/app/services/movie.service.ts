@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { CapacitorHttp, HttpOptions } from '@capacitor/core';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -11,35 +11,55 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 })
 export class MovieService{
     
-    constructor(private http: HttpClient) { }
+    constructor() { }
 
     //get todays trending movies
-     getTrending() {
-        return this.http.get(BASE_URL + '/trending/movie/day?api_key=' + environment.apiKey);
+     async getTrending() {
+        const options: HttpOptions ={
+            url: BASE_URL + '/trending/movie/day?api_key=' + environment.apiKey
+        };
+        const response = await CapacitorHttp.get(options);
+        return response.data;
     
      
     }
 
     //search movies by name
-     searchMovies(query: string) {
-        return this.http.get(BASE_URL + '/search/movie?query=' + query + '&api_key=' + environment.apiKey);
+     async searchMovies(query: string) {
+        const options: HttpOptions = {
+            url: BASE_URL + '/search/movie?query=' + query + '&api_key=' + environment.apiKey
+        };
+        const response = await CapacitorHttp.get(options);
+        return response.data;
      
       }
 
     //get cast and crew for a movie
-     getMovieCredits(movieId: any){
-        return this.http.get(BASE_URL + '/movie/' + movieId + '/credits?api_key=' + environment.apiKey);
+     async getMovieCredits(movieId: any){
+        const options: HttpOptions = {
+            url: BASE_URL + '/movie/' + movieId + '/credits?api_key=' + environment.apiKey
+        };
+        const response = await CapacitorHttp.get(options);
+        return response.data;
         
     }
 
     //get details for a person
-     getPersonDetails(personId: any){
-        return this.http.get(BASE_URL + '/person/' + personId + '?api_key=' + environment.apiKey)
+     async getPersonDetails(personId: any){
+        const options: HttpOptions = {
+            url: BASE_URL + '/person/' + personId + '?api_key=' + environment.apiKey
+        };
+        const response = await CapacitorHttp.get(options);
+        return response.data;
     }
 
     //get movies a person has been in
-     getPersonMovieCredits(personId: any) {
-        return this.http.get(BASE_URL + '/person/' + personId + '/movie_credits?api_key=' + environment.apiKey)
+     async getPersonMovieCredits(personId: any) {
+        const options: HttpOptions = {
+            url: BASE_URL + '/person/' + personId + '/movie_credits?api_key=' + environment.apiKey
+        };
+        const response = await CapacitorHttp.get(options);
+        return response.data;
         
     }
 

@@ -1,6 +1,6 @@
-import { Component , OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, ViewWillEnter
 } from '@ionic/angular/standalone';
@@ -29,11 +29,11 @@ export class MovieDetailsPage implements OnInit{
     isFavourite = false;
 
     constructor(
-        private navCtrl: NavController,
+        private router: Router,
         private movieService: MovieService,
         private favouritesService: FavouritesService,
-        private dataService: DataService,
-        private cdr: ChangeDetectorRef
+        private dataService: DataService
+       
     ){
         addIcons({ home, heart });
         //get the selected movie as soon as the component is created
@@ -41,32 +41,29 @@ export class MovieDetailsPage implements OnInit{
     }
 
     //runs every time the page is opened
-     ngOnInit() {
+      async ngOnInit() {
+        this.movie = this.dataService.selectedMovie;
         
 
         if (this.movie){
-            this.favouritesService.isFavourite(this.movie.id).then((result: any) =>{
-              this.isFavourite = result; 
-              this.cdr.detectChanges(); 
-            });
+            this.isFavourite = await this.favouritesService.isFavourite(this.movie.id);
+            
 
             //get cast and crew for this movie
-            this.movieService.getMovieCredits(this.movie.id).subscribe((data: any) => {
-                this.cast = data.cast;
-                this.crew = data.crew;
-                this.cdr.detectChanges();
-                console.log(this.cast);
-            });
+            const data = await this.movieService.getMovieCredits(this.movie.id);
+            this.cast = data.cast;
+            this.crew = data.crew;
+            console.log(this.cast);
             
         }
     }
 
     //toggle between add and remove favourite
-     toggleFavourite() {
+     async toggleFavourite() {
         if(this.isFavourite) {
-             this.favouritesService.removeFavourite(this.movie.id);
+            await this.favouritesService.removeFavourite(this.movie.id);
         } else{
-             this.favouritesService.addFavourite(this.movie);
+             await this.favouritesService.addFavourite(this.movie);
         }
         this.isFavourite = !this.isFavourite;
     }
@@ -74,15 +71,15 @@ export class MovieDetailsPage implements OnInit{
     //store selected person and go to details page
     openPersonDetails(person: any) {
         this.dataService.selectedPerson = person;
-        this.navCtrl.navigateForward(['/details']);
+        this.router.navigate(['/details']);
     }
 
     goHome(){
-        this.navCtrl.navigateForward(['/home']);
+        this.router.navigate(['/home']);
     }
 
     goToFavourites(){
-        this.navCtrl.navigateForward(['/favourites']);
+        this.router.navigate(['/favourites']);
     }
 
     getImageUrl(path: string) {

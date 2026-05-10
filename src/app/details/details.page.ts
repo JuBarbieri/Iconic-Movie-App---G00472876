@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavController } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 import {
     IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, ViewWillEnter
 } from '@ionic/angular/standalone';
@@ -26,7 +26,7 @@ export class DetailsPage implements ViewWillEnter {
     movies: any =[];
 
     constructor(
-        private navCtrl: NavController,
+        private router: Router,
         private movieService: MovieService,
         private dataService: DataService
     ){
@@ -34,42 +34,41 @@ export class DetailsPage implements ViewWillEnter {
     }
 
     // runs every time the page is opened
-     ionViewWillEnter() {
+     async ionViewWillEnter() {
         this.person = this.dataService.selectedPerson;
     
 
     if (this.person) {
         // get full details for this person
-        this.movieService.getPersonDetails(this.person.id).subscribe((data: any) => {
-            this.details = data;
-            console.log(this.details);
-        });
+        this.details = await this.movieService.getPersonDetails(this.person.id);
+        console.log(this.details);
+        
         
 
         //get movies this person has been in
-        this.movieService.getPersonMovieCredits(this.person.id).subscribe((data: any) => {
+        const data = await this.movieService.getPersonMovieCredits(this.person.id);
             this.movies = data.cast;
-        });
+        }
        
     }
-}
 
-// store selected movie and go to movie details page
-openMovie(movie: any) {
-    this.dataService.selectedMovie = movie;
-    this.navCtrl.navigateForward(['/movie-details']);
-}
 
-goHome(){
-    this.navCtrl.navigateForward(['/home']);
-}
+    // store selected movie and go to movie details page
+    openMovie(movie: any) {
+        this.dataService.selectedMovie = movie;
+        this.router.navigate(['/movie-details']);
+    }
 
-goToFavourites(){
-    this.navCtrl.navigateForward(['/favourites']);
-}
+    goHome(){
+        this.router.navigate(['/home']);
+    }
 
-getImageUrl(path: string) {
-    return this.movieService.getImageUrl(path);
-}
+    goToFavourites(){
+        this.router.navigate(['/favourites']);
+    }
+
+    getImageUrl(path: string) {
+        return this.movieService.getImageUrl(path);
+    }
 
 }

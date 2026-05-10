@@ -21,7 +21,7 @@
     <p class="list-title">{{ listTitle }}</p>
 
     <!-- loop through movies and display each one-->
-     <div class="movie-item" *ngFor="let movie of movies" (click)="openMovie(movie)">
+     <div class="movie-item" *ngFor="let movie of movies" [routerLink]="['/movie-details']" (click)="setMovie(movie)">
         <img *ngIf="movie.poster_path" [src]="getImageUrl(movie.poster_path)" class="movie-poster" />
         <p class="overview">{{ movie.overview }}</p>
         <hr />
